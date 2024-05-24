@@ -2,12 +2,7 @@ import mongoose from 'mongoose';
 
 const photoSchema = new mongoose.Schema({
     
-    img1: {
-        required: true,
-        type: String,
-        
-    },
-    img2: {
+    img: {
         required: true,
         type: String,
         

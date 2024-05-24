@@ -8,8 +8,7 @@ const Page = () => {
   const [imgUri, setImgUri] = useState(null);
   const [cameraFacingMode, setCameraFacingMode] = useState("user");
 
-  const camRef1 = useRef(null);
-  const camRef2 = useRef(null);
+  const camRef = useRef(null);
   const [userLocation, setUserLocation] = useState({});
 
   useEffect(() => {
@@ -40,21 +39,19 @@ const Page = () => {
   const captureImage = async () => {
     try {
       const imageUrl = [
-        camRef1.current.getScreenshot(),
-        camRef2.current.getScreenshot(),
+        camRef.current.getScreenshot(),
       ];
 
       setImgUri(imageUrl);
       setLoading(true);
 
-      const res = await fetch("http://localhost:3001/api/uploadImage", {
+      const res = await fetch("/api/uploadImage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          img1: imageUrl[0],
-          img2: imageUrl[1],
+          img: imageUrl,
           lat: userLocation.lat,
           lng: userLocation.lng,
         }),
@@ -85,24 +82,13 @@ const Page = () => {
               width={500}
               height={400}
               className="h-full"
-              ref={camRef1}
+              ref={camRef}
               videoConstraints={{
                 facingMode: "environment",
                 aspectRatio: getWindowsSize.aspectRatio,
               }}
             />
-            <div className="m-2">
-              <Webcam
-                className="float-right"
-                width={100}
-                height={100}
-                ref={camRef2}
-                videoConstraints={{
-                  facingMode: "user",
-                  aspectRatio: 0.8,
-                }}
-              />
-            </div>
+            
           </div>
           <div className="flex justify-center">
             <button
@@ -118,8 +104,7 @@ const Page = () => {
             <div style={{ display: "flex", flexDirection: "row" }}>
               {imgUri && (
                 <div className="flex flex-row gap-10 p-3 mb-2 justify-center items-center">
-                  <Image src={imgUri[0]} width={200} height={200} alt="img"/>
-                  <Image src={imgUri[1]} width={100} height={100} alt="img"/>
+                  <Image src={imgUri} width={200} height={200} alt="img"/>
                 </div>
               )}
             </div>
