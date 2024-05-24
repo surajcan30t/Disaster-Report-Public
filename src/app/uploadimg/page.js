@@ -38,9 +38,7 @@ const Page = () => {
 
   const captureImage = async () => {
     try {
-      const imageUrl = [
-        camRef.current.getScreenshot(),
-      ];
+      const imageUrl = camRef.current.getScreenshot();
 
       setImgUri(imageUrl);
       setLoading(true);
