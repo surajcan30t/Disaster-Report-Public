@@ -47,7 +47,7 @@ const Page = () => {
       setImgUri(imageUrl);
       setLoading(true);
 
-      const res = await fetch("http://localhost:3001/api/uploadImage", {
+      const res = await fetch("/api/uploadImage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
